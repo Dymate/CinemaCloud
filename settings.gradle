@@ -1,5 +1,5 @@
 rootProject.name = 'CinemaCloud'
 
 include 'user-service'
-include 'showtimes-service'
+include 'movies-service'
 

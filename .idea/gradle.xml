@@ -10,7 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/showtimes-service" />
+            <option value="$PROJECT_DIR$/movies-service" />
             <option value="$PROJECT_DIR$/user-service" />
           </set>
         </option>
