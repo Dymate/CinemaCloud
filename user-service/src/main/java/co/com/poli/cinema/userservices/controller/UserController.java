@@ -3,6 +3,7 @@ package co.com.poli.cinema.userservices.controller;
 import co.com.poli.cinema.userservices.helpers.Response;
 import co.com.poli.cinema.userservices.helpers.ResponseBuild;
 import co.com.poli.cinema.userservices.persistence.entity.User;
+import co.com.poli.cinema.userservices.service.DTO.UserDTO;
 import co.com.poli.cinema.userservices.service.UserService;
 import co.com.poli.cinema.userservices.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveUser(@RequestBody User user) {
+    public ResponseEntity<String> saveUser(@RequestBody UserDTO userDTO) {
 
-        return new ResponseEntity<String>(this.userServiceImpl.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<String>(this.userServiceImpl.saveUser(userDTO), HttpStatus.CREATED);
 
     }
 

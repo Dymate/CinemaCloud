@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:///C:/Users/DYLAN/Desktop/TallerCloud2/CinemaCloudConfigData
+  security:
+    user:
+      name: ${CONFIG_USER}
+      password: ${CONFIG_PASSWORD}
+server:
+  port: 9000
+
+

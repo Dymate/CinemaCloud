@@ -3,10 +3,9 @@ package co.com.poli.cinema.userservices.service;
 import co.com.poli.cinema.userservices.exceptions.UserCloudExceptions;
 import co.com.poli.cinema.userservices.persistence.entity.User;
 import co.com.poli.cinema.userservices.persistence.repository.UserRepository;
+import co.com.poli.cinema.userservices.service.DTO.UserDTO;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +27,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String saveUser(User user) {
-
+    public String saveUser(UserDTO userDTO) {
+        User user = new User(userDTO.getName(),userDTO.getLastname());
         userRepository.save(user);
         return "Usuario creado";
 

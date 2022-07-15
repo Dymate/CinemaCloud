@@ -28,6 +28,11 @@ public class User {
     @OneToMany(mappedBy = "users")
     List<Bookings> bookingsList;
 
+    public User(String name, String lastname) {
+        this.name = name;
+        this.lastname = lastname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
