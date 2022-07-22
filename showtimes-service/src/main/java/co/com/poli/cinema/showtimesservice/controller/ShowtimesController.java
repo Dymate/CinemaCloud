@@ -39,10 +39,10 @@ public class ShowtimesController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteShowtimes(@PathVariable("id") Long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Showtimes> putShowtimes(@PathVariable("id") Long id, @RequestBody ShowtimesDTO showtimesDTO) {
 
-        return new ResponseEntity<>(this.showtimesServiceImp.deleteShowtime(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.showtimesServiceImp.putShowtime(id, showtimesDTO), HttpStatus.OK);
 
 
     }

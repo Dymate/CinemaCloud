@@ -1,10 +1,13 @@
 package co.com.poli.cinema.showtimesservice.service;
 
 import co.com.poli.cinema.showtimesservice.exceptions.ShowtimesCloudExceptions;
+import co.com.poli.cinema.showtimesservice.feign.MoviesClient;
+import co.com.poli.cinema.showtimesservice.model.Movies;
 import co.com.poli.cinema.showtimesservice.persistence.entity.Showtimes;
 import co.com.poli.cinema.showtimesservice.persistence.repository.ShowtimesRepository;
 import co.com.poli.cinema.showtimesservice.service.ShowtimesDTO.ShowtimesDTO;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,51 +20,51 @@ import java.util.Optional;
 public class ShowtimesServiceImpl implements ShowtimesService {
 
     private final ShowtimesRepository showtimesRepository;
-    private final MoviesRepository moviesRepository;
+    private final MoviesClient moviesClient;
+
 
     @Override
     @Transactional(readOnly = true)
     public List<Showtimes> findAll() {
+
         return showtimesRepository.findAll();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveShowtime(ShowtimesDTO showtimesDTO) {
-        Optional<Movies> movies = moviesRepository.findById(showtimesDTO.getIdMovie());
-        if (movies.isPresent()) {
-            Showtimes showtimes = new Showtimes(showtimesDTO.getDate(), movies.get());
-            showtimesRepository.save(showtimes);
-            return "Funcion creada con exito!";
-        } else {
-            throw new ShowtimesCloudExceptions("No hay pelicula con ese id", HttpStatus.BAD_REQUEST);
-        }
 
+        Showtimes showtimes = new Showtimes(showtimesDTO.getIdMovie(), showtimesDTO.getDate());
+
+        showtimesRepository.save(showtimes);
+
+        return "Funcion creada";
     }
 
     @Override
     public Showtimes getShowtime(Long id) {
         Optional<Showtimes> optionalShowtimes = showtimesRepository.findById(id);
-        if (optionalShowtimes.isPresent()){
+        if (optionalShowtimes.isPresent()) {
             return optionalShowtimes.get();
-        }else{
+        } else {
             throw new ShowtimesCloudExceptions("No existe una funcion con ese id", HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public String deleteShowtime(Long id) {
+    public Showtimes putShowtime(Long id, ShowtimesDTO showtimesDTO) {
         Optional<Showtimes> optionalShowtimes = showtimesRepository.findById(id);
         if (optionalShowtimes.isPresent()) {
-            Showtimes showtimes = optionalShowtimes.get();
-            if (showtimes.getBookingsList().isEmpty()) {
-                showtimesRepository.deleteById(id);
-                return "Funcion eliminada";
-            } else {
-                throw new ShowtimesCloudExceptions("La funcion no debe tener reservas asosciadas para eliminar", HttpStatus.BAD_REQUEST);
+
+            if (showtimesDTO.getIdMovie() != null) {
+                optionalShowtimes.get().setMovies(id);
             }
-        } else {
-            throw new ShowtimesCloudExceptions("No se encontro la funcion con ese id", HttpStatus.NOT_FOUND);
+
+            if (showtimesDTO.getDate() != null) {
+                optionalShowtimes.get().setDate(showtimesDTO.getDate());
+            }
+
         }
+        return showtimesRepository.save(optionalShowtimes.get());
     }
 }

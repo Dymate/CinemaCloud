@@ -10,5 +10,7 @@ public class MoviesDTO {
     String title;
     String director;
     int rating;
+    Long showtimesId;
+    Long bookingsId;
 
 }

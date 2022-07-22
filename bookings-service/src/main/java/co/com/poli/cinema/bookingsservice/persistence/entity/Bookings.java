@@ -3,6 +3,7 @@ package co.com.poli.cinema.bookingsservice.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -22,12 +23,19 @@ public class Bookings {
     @Column(name = "Users_idUser", nullable = false)
     private Long userid;
 
-    @Column(name = "Showtimes_idShowtimes", nullable = false)
-    private Long showtimeid;
+    @Transient
+    @Column
+    private Long showtime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idShowtime")
-    private Movies movies;
+    @Transient
+    @Column
+    private Long movie;
+
+    public Bookings(Long showtimeid, Long userid, Long movieid) {
+        this.showtime = showtimeid;
+        this.userid = userid;
+        this.movie = movieid;
+    }
 
     @Override
     public boolean equals(Object o) {

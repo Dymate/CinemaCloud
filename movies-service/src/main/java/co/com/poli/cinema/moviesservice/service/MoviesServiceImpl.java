@@ -29,18 +29,26 @@ public class MoviesServiceImpl implements MoviesService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveMovies(MoviesDTO moviesDTO) {
+
         Movies movies = new Movies(moviesDTO.getTitle(), moviesDTO.getDirector(), moviesDTO.getRating());
+        if (moviesDTO.getBookingsId() != null) {
+            movies.getBookings().add(moviesDTO.getBookingsId());
+        }
+        if (moviesDTO.getShowtimesId() != null) {
+            movies.getShowtimes().add(moviesDTO.getShowtimesId());
+        }
         moviesRepository.save(movies);
+
         return "pelicula creada";
     }
 
     @Override
     public Movies getMovie(Long id) {
         Optional<Movies> optionalMovies = moviesRepository.findById(id);
-        if (optionalMovies.isPresent()){
+        if (optionalMovies.isPresent()) {
             return optionalMovies.get();
-        }else{
-           throw new MoviesCloudExceptions("No existe una pelicula con ese id", HttpStatus.BAD_REQUEST);
+        } else {
+            throw new MoviesCloudExceptions("No existe una pelicula con ese id", HttpStatus.BAD_REQUEST);
         }
 
     }
@@ -51,11 +59,11 @@ public class MoviesServiceImpl implements MoviesService {
         Optional<Movies> optionalMovies = moviesRepository.findById(id);
         if (optionalMovies.isPresent()) {
             Movies movies = optionalMovies.get();
-            if (movies.showtimesList().isEmpty()) {
+            if (movies.getShowtimes().isEmpty() && movies.getBookings().isEmpty()) {
                 moviesRepository.deleteById(id);
                 return "Pelicula eliminada";
             } else {
-                throw new MoviesCloudExceptions("La pelicula no debe tener funciones asosciadas para eliminar", HttpStatus.BAD_REQUEST);
+                throw new MoviesCloudExceptions("La pelicula no debe tener funciones/reservas asosciadas para eliminar", HttpStatus.BAD_REQUEST);
             }
         } else {
             throw new MoviesCloudExceptions("No se encontro la pelicula con ese id", HttpStatus.NOT_FOUND);

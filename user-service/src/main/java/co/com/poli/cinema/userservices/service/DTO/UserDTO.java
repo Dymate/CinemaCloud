@@ -11,5 +11,6 @@ public class UserDTO {
 
     String name;
     String lastname;
+    Long bookingsID;
 
 }

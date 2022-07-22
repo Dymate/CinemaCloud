@@ -18,9 +18,6 @@ import java.util.Optional;
 public class BookingsServiceImpl implements BookingsService {
 
     private final BookingsRepository bookingsRepository;
-    private final UserRepository userRepository;
-
-    private final ShowtimesRepository showtimesRepository;
 
 
     @Override
@@ -32,23 +29,10 @@ public class BookingsServiceImpl implements BookingsService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveBookings(BookingsDTO bookingsDTO) {
-        User user = new User();
-        Optional<User> userOptional = userRepository.findById(bookingsDTO.getUserid());
-        if (userOptional.isPresent()) {
-            user = userOptional.get();
-        } else {
-            throw new BookingsCloudExceptions("Usuario no encontrado", HttpStatus.BAD_REQUEST);
-        }
 
-        Showtimes showtimes = new Showtimes();
-        Optional<Showtimes> optionalShowtimes = showtimesRepository.findById(bookingsDTO.getShowtimeid());
-        if (optionalShowtimes.isPresent()) {
-            showtimes = optionalShowtimes.get();
-        } else {
-            throw new BookingsCloudExceptions("Función no encontrada", HttpStatus.BAD_REQUEST);
-        }
 
-        Bookings bookings = new Bookings(user, showtimes, showtimes.getMovie()); //TODO: DUDA
+        Bookings bookings = new Bookings(bookingsDTO.getShowtimeid(), bookingsDTO.getUserid(), bookingsDTO.getMovieid());
+
         bookingsRepository.save(bookings);
 
 

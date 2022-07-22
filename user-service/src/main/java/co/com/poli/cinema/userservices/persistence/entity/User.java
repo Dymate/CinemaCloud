@@ -3,6 +3,8 @@ package co.com.poli.cinema.userservices.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -17,20 +19,23 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "idUser", updatable = false, nullable = false, unique = true)
-    Long id;
+    private Long id;
 
-    @Column
-    String name;
+    @Column(nullable = false)
+    private String name;
 
-    @Column
-    String lastname;
+    @Column(nullable = false)
+    private String lastname;
 
-    @OneToMany(mappedBy = "users")
-    List<Bookings> bookingsList;
+    //    @OneToMany(mappedBy = "users")
+    @Transient
+    @Column(nullable = false)
+    List<Long> bookings;
 
     public User(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;
+        this.bookings = new ArrayList<>();
     }
 
     @Override

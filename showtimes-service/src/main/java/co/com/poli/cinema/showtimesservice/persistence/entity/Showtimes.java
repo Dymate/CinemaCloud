@@ -1,14 +1,12 @@
 package co.com.poli.cinema.showtimesservice.persistence.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-import
 
 @Getter
 @Setter
@@ -28,15 +26,15 @@ public class Showtimes {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToMany(mappedBy = "showtimes")
-    private private List<Bookings> bookingsList;
+    @Transient
+    @Column(nullable = false)
+    private Long movies;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Movies_idMovie")
-    private Movies movie;
-
-    public Showtimes(LocalDate date, Movies movies) {
+    public Showtimes(Long idMovie, LocalDate date) {
         this.date = date;
-        this.movie = movies;
+        this.movies = idMovie;
     }
+
+
+
 }

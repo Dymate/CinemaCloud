@@ -14,7 +14,7 @@ public interface ShowtimesService {
 
     Showtimes getShowtime(Long id);
 
-    String deleteShowtime(Long id);
+    Showtimes putShowtime(Long id,ShowtimesDTO showtimesDTO);
 
 
 }

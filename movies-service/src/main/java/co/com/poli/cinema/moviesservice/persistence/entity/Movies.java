@@ -3,6 +3,7 @@ package co.com.poli.cinema.moviesservice.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -28,9 +29,11 @@ public class Movies {
     @Column
     private int rating;
 
-    @OneToMany(mappedBy = "movies")
-    private List<Showtimes> showtimesList;
+    @Transient
+    private List<Long> showtimes;
 
+    @Transient
+    private List<Long> bookings;
 
 
     public Movies(String title, String director, int rating) {

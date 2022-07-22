@@ -9,6 +9,6 @@ public class BookingsDTO {
 
     private Long userid;
     private Long showtimeid;
-
+    private Long movieid;
 
 }

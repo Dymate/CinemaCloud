@@ -31,7 +31,7 @@ public class MoviesController {
 
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Movies> getMovie(@PathVariable("id") Long id){
 
         return new ResponseEntity<>(this.moviesServiceImp.getMovie(id), HttpStatus.OK);

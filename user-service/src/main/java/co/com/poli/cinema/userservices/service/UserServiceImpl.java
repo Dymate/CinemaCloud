@@ -29,6 +29,9 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public String saveUser(UserDTO userDTO) {
         User user = new User(userDTO.getName(),userDTO.getLastname());
+        if(userDTO.getBookingsID() != null){
+            user.getBookings().add(userDTO.getBookingsID());
+        }
         userRepository.save(user);
         return "Usuario creado";
 
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getBookingsList().isEmpty()) {
+            if (user.getBookings().isEmpty()) {
                 userRepository.deleteById(id);
                 return "Usuario eliminado";
             } else {
