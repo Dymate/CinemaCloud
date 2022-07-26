@@ -1,8 +1,8 @@
 package co.com.poli.cinema.showtimesservice.service;
 
 import co.com.poli.cinema.showtimesservice.exceptions.ShowtimesCloudExceptions;
-import co.com.poli.cinema.showtimesservice.feign.MoviesClient;
-import co.com.poli.cinema.showtimesservice.model.Movies;
+//import co.com.poli.cinema.showtimesservice.feign.MoviesClient;
+//import co.com.poli.cinema.showtimesservice.model.Movies;
 import co.com.poli.cinema.showtimesservice.persistence.entity.Showtimes;
 import co.com.poli.cinema.showtimesservice.persistence.repository.ShowtimesRepository;
 import co.com.poli.cinema.showtimesservice.service.ShowtimesDTO.ShowtimesDTO;
@@ -20,7 +20,6 @@ import java.util.Optional;
 public class ShowtimesServiceImpl implements ShowtimesService {
 
     private final ShowtimesRepository showtimesRepository;
-    private final MoviesClient moviesClient;
 
 
     @Override
@@ -55,16 +54,17 @@ public class ShowtimesServiceImpl implements ShowtimesService {
     public Showtimes putShowtime(Long id, ShowtimesDTO showtimesDTO) {
         Optional<Showtimes> optionalShowtimes = showtimesRepository.findById(id);
         if (optionalShowtimes.isPresent()) {
-
+            Showtimes showtimes = optionalShowtimes.get();
             if (showtimesDTO.getIdMovie() != null) {
-                optionalShowtimes.get().setMovies(id);
+                showtimes.setMovies(showtimesDTO.getIdMovie());
             }
 
             if (showtimesDTO.getDate() != null) {
-                optionalShowtimes.get().setDate(showtimesDTO.getDate());
+                showtimes.setDate(showtimesDTO.getDate());
             }
+            return showtimesRepository.save(showtimes);
+        } else
+            throw new ShowtimesCloudExceptions("No se encontro la función", HttpStatus.NOT_FOUND);
 
-        }
-        return showtimesRepository.save(optionalShowtimes.get());
     }
 }

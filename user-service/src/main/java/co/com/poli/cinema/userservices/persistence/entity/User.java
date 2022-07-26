@@ -27,10 +27,10 @@ public class User {
     @Column(nullable = false)
     private String lastname;
 
-    //    @OneToMany(mappedBy = "users")
-    @Transient
+    //    @OneToMany(mappedBy = "users"
     @Column(nullable = false)
-    List<Long> bookings;
+    @ElementCollection
+    private List<Long> bookings;
 
     public User(String name, String lastname) {
         this.name = name;

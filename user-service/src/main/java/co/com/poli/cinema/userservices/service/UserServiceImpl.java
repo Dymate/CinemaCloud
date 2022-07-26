@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveUser(UserDTO userDTO) {
-        User user = new User(userDTO.getName(),userDTO.getLastname());
-        if(userDTO.getBookingsID() != null){
+        User user = new User(userDTO.getName(), userDTO.getLastname());
+        if (userDTO.getBookingsID() != null) {
             user.getBookings().add(userDTO.getBookingsID());
         }
         userRepository.save(user);

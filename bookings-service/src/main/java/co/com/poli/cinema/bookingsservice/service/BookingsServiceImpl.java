@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public class BookingsServiceImpl implements BookingsService {
     }
 
     @Override
-    public Bookings getBookings(Long id) {
+    public Bookings getBookingById(Long id) {
         Optional<Bookings> optionalBookings = bookingsRepository.findById(id);
         if (optionalBookings.isPresent()) {
             return optionalBookings.get();
@@ -61,8 +60,8 @@ public class BookingsServiceImpl implements BookingsService {
     }
 
     @Override
-    public List<Bookings> getBookingsByUserId(Long userid) {
-        List<Bookings> bookingsList = bookingsRepository.findAllByUserid(userid);
+    public List<Bookings> getBookingsByUserId(Long userId) {
+        List<Bookings> bookingsList = bookingsRepository.findAllByUserId(userId);
         if (bookingsList.isEmpty()) {
             throw new BookingsCloudExceptions("Este usuario no tiene resarvas", HttpStatus.BAD_REQUEST);
         } else {

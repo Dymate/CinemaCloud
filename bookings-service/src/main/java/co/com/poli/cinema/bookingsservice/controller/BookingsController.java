@@ -23,7 +23,7 @@ public class BookingsController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveShowtimes(@RequestBody BookingsDTO bookingsDTO) {
+    public ResponseEntity<String> saveBookings(@RequestBody BookingsDTO bookingsDTO) {
 
         return new ResponseEntity<>(
                 this.bookingsServiceImpl.saveBookings(bookingsDTO), HttpStatus.CREATED);
@@ -31,9 +31,9 @@ public class BookingsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bookings> getMovie(@PathVariable("id") Long id) {
+    public ResponseEntity<Bookings> getBookingById(@PathVariable("id") Long id) {
 
-        return new ResponseEntity<>(this.bookingsServiceImpl.getBookings(id), HttpStatus.OK);
+        return new ResponseEntity<>(this.bookingsServiceImpl.getBookingById(id), HttpStatus.OK);
 
     }
 
@@ -45,10 +45,10 @@ public class BookingsController {
 
     }
 
-    @GetMapping("/{userid}")
-    public ResponseEntity<List<Bookings>> getShowtimeUserId(@PathVariable("userid") Long userid) {
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<Bookings>> getBookingsByUserId(@PathVariable("userId") Long userId) {
 
-        return new ResponseEntity<>(this.bookingsServiceImpl.getBookingsByUserId(userid), HttpStatus.OK);
+        return new ResponseEntity<>(this.bookingsServiceImpl.getBookingsByUserId(userId), HttpStatus.OK);
 
 
     }

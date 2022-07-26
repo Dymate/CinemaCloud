@@ -31,10 +31,10 @@ public class MoviesServiceImpl implements MoviesService {
     public String saveMovies(MoviesDTO moviesDTO) {
 
         Movies movies = new Movies(moviesDTO.getTitle(), moviesDTO.getDirector(), moviesDTO.getRating());
-        if (moviesDTO.getBookingsId() != null) {
+        if (moviesDTO.getBookingsId() != null && moviesDTO.getBookingsId() != 0) {
             movies.getBookings().add(moviesDTO.getBookingsId());
         }
-        if (moviesDTO.getShowtimesId() != null) {
+        if (moviesDTO.getShowtimesId() != null && moviesDTO.getBookingsId() != 0) {
             movies.getShowtimes().add(moviesDTO.getShowtimesId());
         }
         moviesRepository.save(movies);

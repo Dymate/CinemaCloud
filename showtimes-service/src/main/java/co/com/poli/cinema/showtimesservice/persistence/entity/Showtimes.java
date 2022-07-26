@@ -19,14 +19,14 @@ public class Showtimes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idShowtime", updatable = false, nullable = false, unique = true)
+    @Column(updatable = false, nullable = false, unique = true)
     private Long id;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "date", nullable = false)
+    @Column( nullable = false)
     private LocalDate date;
 
-    @Transient
+
     @Column(nullable = false)
     private Long movies;
 

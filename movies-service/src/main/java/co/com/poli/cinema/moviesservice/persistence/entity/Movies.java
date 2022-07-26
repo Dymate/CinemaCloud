@@ -3,6 +3,7 @@ package co.com.poli.cinema.moviesservice.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,10 +30,12 @@ public class Movies {
     @Column
     private int rating;
 
-    @Transient
+    @ElementCollection
+    @Column
     private List<Long> showtimes;
 
-    @Transient
+    @ElementCollection
+    @Column
     private List<Long> bookings;
 
 
@@ -40,6 +43,8 @@ public class Movies {
         this.title = title;
         this.director = director;
         this.rating = rating;
+        this.showtimes= new ArrayList<>();
+        this.bookings=new ArrayList<>();
     }
 
     @Override

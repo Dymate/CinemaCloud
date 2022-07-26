@@ -17,24 +17,24 @@ public class Bookings {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idBookings", updatable = false, nullable = false, unique = true)
+    @Column( updatable = false, nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "Users_idUser", nullable = false)
-    private Long userid;
+    @Column(nullable = false)
+    private Long userId;
 
-    @Transient
+
     @Column
     private Long showtime;
 
-    @Transient
+
     @Column
     private Long movie;
 
-    public Bookings(Long showtimeid, Long userid, Long movieid) {
-        this.showtime = showtimeid;
-        this.userid = userid;
-        this.movie = movieid;
+    public Bookings(Long showtimeId, Long userid, Long movie) {
+        this.showtime = showtimeId;
+        this.userId = userid;
+        this.movie = movie;
     }
 
     @Override

@@ -7,12 +7,14 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.24/13a394eed5c4f9efb2a6d956e2086f1d81e857d9/lombok-1.18.24.jar" />
         </processorPath>
+        <module name="CinemaCloud.gateway-service.main" />
+        <module name="CinemaCloud.user-service.main" />
+        <module name="CinemaCloud.movies-service.main" />
         <module name="CinemaCloud.config-service.main" />
         <module name="CinemaCloud.showtimes-service.main" />
-        <module name="CinemaCloud.user-service.main" />
         <module name="CinemaCloud.bookings-service.main" />
         <module name="CinemaCloud.eureka-service.main" />
-        <module name="CinemaCloud.movies-service.main" />
+        <module name="CinemaCloud.admin-service.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="11" />

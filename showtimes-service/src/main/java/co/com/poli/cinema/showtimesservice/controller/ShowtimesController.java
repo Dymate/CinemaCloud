@@ -31,7 +31,7 @@ public class ShowtimesController {
 
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Showtimes> getShowtime(@PathVariable("id") Long id) {
 
         return new ResponseEntity<>(this.showtimesServiceImp.getShowtime(id), HttpStatus.OK);

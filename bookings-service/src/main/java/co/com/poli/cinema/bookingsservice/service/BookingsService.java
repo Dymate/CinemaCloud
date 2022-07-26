@@ -12,11 +12,10 @@ public interface BookingsService {
 
     String saveBookings(BookingsDTO bookingsDTO);
 
-    Bookings getBookings(Long id);
+    Bookings getBookingById(Long id);
 
     String deleteBookings(Long id);
 
     List<Bookings> getBookingsByUserId(Long userid);
-
 
 }
