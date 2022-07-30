@@ -1,7 +1,9 @@
 package co.com.poli.cinema.bookingsservice.controller;
 
+import co.com.poli.cinema.bookingsservice.helpers.Response;
+import co.com.poli.cinema.bookingsservice.helpers.ResponseBuild;
 import co.com.poli.cinema.bookingsservice.persistence.entity.Bookings;
-import co.com.poli.cinema.bookingsservice.service.BookingsServiceImpl;
+import co.com.poli.cinema.bookingsservice.service.BookingsService;
 import co.com.poli.cinema.bookingsservice.service.DTO.BookingsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,40 +17,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingsController {
 
-    private final BookingsServiceImpl bookingsServiceImpl;
+    private final BookingsService bookingsService;
+    private final ResponseBuild builder;
 
     @GetMapping
-    public ResponseEntity<List<Bookings>> getBookings() {
-        return new ResponseEntity<>(this.bookingsServiceImpl.findAll(), HttpStatus.OK);
+    public Response getBookings() {
+        return this.builder.success(this.bookingsService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<String> saveBookings(@RequestBody BookingsDTO bookingsDTO) {
+    public Response saveBookings(@RequestBody BookingsDTO bookingsDTO) {
 
-        return new ResponseEntity<>(
-                this.bookingsServiceImpl.saveBookings(bookingsDTO), HttpStatus.CREATED);
+        return builder.success(
+                this.bookingsService.saveBookings(bookingsDTO));
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bookings> getBookingById(@PathVariable("id") Long id) {
+    public Response getBookingById(@PathVariable("id") Long id) {
 
-        return new ResponseEntity<>(this.bookingsServiceImpl.getBookingById(id), HttpStatus.OK);
+        return builder.success(this.bookingsService.getBookingById(id));
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public Response delete(@PathVariable("id") Long id) {
 
-        return new ResponseEntity<>(this.bookingsServiceImpl.deleteBookings(id), HttpStatus.OK);
+        return builder.success(this.bookingsService.deleteBookings(id));
 
 
     }
 
     @GetMapping("user/{userId}")
-    public ResponseEntity<List<Bookings>> getBookingsByUserId(@PathVariable("userId") Long userId) {
+    public Response getBookingsByUserId(@PathVariable("userId") Long userId) {
 
-        return new ResponseEntity<>(this.bookingsServiceImpl.getBookingsByUserId(userId), HttpStatus.OK);
+        return builder.success(this.bookingsService.getBookingsByUserId(userId));
 
 
     }

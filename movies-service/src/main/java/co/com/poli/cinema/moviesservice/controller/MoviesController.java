@@ -1,5 +1,7 @@
 package co.com.poli.cinema.moviesservice.controller;
 
+import co.com.poli.cinema.moviesservice.helpers.Response;
+import co.com.poli.cinema.moviesservice.helpers.ResponseBuild;
 import co.com.poli.cinema.moviesservice.persistence.entity.Movies;
 import co.com.poli.cinema.moviesservice.service.DTO.MoviesDTO;
 import co.com.poli.cinema.moviesservice.service.MoviesServiceImpl;
@@ -16,33 +18,32 @@ import java.util.List;
 public class MoviesController {
 
     private final MoviesServiceImpl moviesServiceImp;
-
+    private final ResponseBuild builder;
     @GetMapping
-    public ResponseEntity<List<Movies>> getMovies() {
-        return new ResponseEntity<>(
-                this.moviesServiceImp.findAll(), HttpStatus.OK);
+    public Response getMovies() {
+        return builder.success(
+                this.moviesServiceImp.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<String> saveMovies(@RequestBody MoviesDTO moviesDTO) {
+    public Response saveMovies(@RequestBody MoviesDTO moviesDTO) {
 
-        return new ResponseEntity<>(
-                this.moviesServiceImp.saveMovies(moviesDTO), HttpStatus.CREATED);
+        return builder.success(this.moviesServiceImp.saveMovies(moviesDTO));
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movies> getMovie(@PathVariable("id") Long id){
+    public Response getMovie(@PathVariable("id") Long id){
 
-        return new ResponseEntity<>(this.moviesServiceImp.getMovie(id), HttpStatus.OK);
+        return builder.success(this.moviesServiceImp.getMovie(id));
 
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public Response delete(@PathVariable("id") Long id) {
 
-        return new ResponseEntity<>(this.moviesServiceImp.deleteMovies(id), HttpStatus.OK);
+        return builder.success(this.moviesServiceImp.deleteMovies(id));
 
 
     }

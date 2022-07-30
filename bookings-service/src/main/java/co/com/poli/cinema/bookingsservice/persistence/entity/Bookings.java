@@ -1,9 +1,10 @@
 package co.com.poli.cinema.bookingsservice.persistence.entity;
 
+import co.com.poli.cinema.bookingsservice.models.Showtime;
+import co.com.poli.cinema.bookingsservice.models.User;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -23,17 +24,29 @@ public class Bookings {
     @Column(nullable = false)
     private Long userId;
 
+    @Transient
+    private User user;
 
-    @Column
-    private Long showtime;
+    @Column(nullable = false)
+    private Long idShowtime;
 
+    @Transient
+    private Showtime showtime;
 
     @Column
     private Long movie;
 
     public Bookings(Long showtimeId, Long userid, Long movie) {
-        this.showtime = showtimeId;
+        this.idShowtime = showtimeId;
         this.userId = userid;
+        this.movie = movie;
+    }
+
+    public Bookings(Long userId, User user, Long idShowtime, Showtime showtime, Long movie) {
+        this.userId = userId;
+        this.user = user;
+        this.idShowtime = idShowtime;
+        this.showtime = showtime;
         this.movie = movie;
     }
 

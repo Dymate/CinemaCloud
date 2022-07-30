@@ -1,5 +1,7 @@
 package co.com.poli.cinema.showtimesservice.controller;
 
+import co.com.poli.cinema.showtimesservice.helpers.Response;
+import co.com.poli.cinema.showtimesservice.helpers.ResponseBuild;
 import co.com.poli.cinema.showtimesservice.persistence.entity.Showtimes;
 import co.com.poli.cinema.showtimesservice.service.ShowtimesDTO.ShowtimesDTO;
 import co.com.poli.cinema.showtimesservice.service.ShowtimesServiceImpl;
@@ -16,33 +18,33 @@ import java.util.List;
 public class ShowtimesController {
 
     private final ShowtimesServiceImpl showtimesServiceImp;
-
+    private final ResponseBuild builder;
     @GetMapping
-    public ResponseEntity<List<Showtimes>> getShowtimes() {
-        return new ResponseEntity<>(
-                this.showtimesServiceImp.findAll(), HttpStatus.OK);
+    public Response getShowtimes() {
+        return builder.success(
+                this.showtimesServiceImp.findAll());
     }
 
     @PostMapping
-    public ResponseEntity<String> saveShowtimes(@RequestBody ShowtimesDTO showtimesDTO) {
+    public Response saveShowtimes(@RequestBody ShowtimesDTO showtimesDTO) {
 
-        return new ResponseEntity<>(
-                this.showtimesServiceImp.saveShowtime(showtimesDTO), HttpStatus.CREATED);
+        return builder.success(
+                this.showtimesServiceImp.saveShowtime(showtimesDTO));
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Showtimes> getShowtime(@PathVariable("id") Long id) {
+    public Response getShowtime(@PathVariable("id") Long id) {
 
-        return new ResponseEntity<>(this.showtimesServiceImp.getShowtime(id), HttpStatus.OK);
+        return builder.success(this.showtimesServiceImp.getShowtime(id));
 
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Showtimes> putShowtimes(@PathVariable("id") Long id, @RequestBody ShowtimesDTO showtimesDTO) {
+    public Response putShowtimes(@PathVariable("id") Long id, @RequestBody ShowtimesDTO showtimesDTO) {
 
-        return new ResponseEntity<>(this.showtimesServiceImp.putShowtime(id, showtimesDTO), HttpStatus.OK);
+        return builder.success(this.showtimesServiceImp.putShowtime(id, showtimesDTO));
 
 
     }

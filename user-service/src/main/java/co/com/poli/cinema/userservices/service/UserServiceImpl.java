@@ -25,6 +25,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Optional<User>findUserById(Long id){
+        return userRepository.findById(id);
+    }
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveUser(UserDTO userDTO) {

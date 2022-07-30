@@ -3,6 +3,7 @@ package co.com.poli.cinema.userservices.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,9 +22,11 @@ public class User {
     @Column(name = "idUser", updatable = false, nullable = false, unique = true)
     private Long id;
 
+    @NotNull
     @Column(nullable = false)
     private String name;
 
+    @NotNull
     @Column(nullable = false)
     private String lastname;
 

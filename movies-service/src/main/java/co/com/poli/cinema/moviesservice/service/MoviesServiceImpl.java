@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,18 +30,23 @@ public class MoviesServiceImpl implements MoviesService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String saveMovies(MoviesDTO moviesDTO) {
-
-        Movies movies = new Movies(moviesDTO.getTitle(), moviesDTO.getDirector(), moviesDTO.getRating());
-        if (moviesDTO.getBookingsId() != null && moviesDTO.getBookingsId() != 0) {
-            movies.getBookings().add(moviesDTO.getBookingsId());
+        try {
+            Movies movies = new Movies(moviesDTO.getTitle(), moviesDTO.getDirector(), moviesDTO.getRating());
+            if (moviesDTO.getBookingsId() != null && moviesDTO.getBookingsId() != 0) {
+                movies.getBookings().add(moviesDTO.getBookingsId());
+            }
+            if (moviesDTO.getShowtimesId() != null && moviesDTO.getBookingsId() != 0) {
+                movies.getShowtimes().add(moviesDTO.getShowtimesId());
+            }
+            moviesRepository.save(movies);
+            return "pelicula creada";
+        }catch (ConstraintViolationException constraintViolationException){
+            throw new MoviesCloudExceptions("El rango de la prioridad debe ser entre 1 y 5. "
+                    , HttpStatus.BAD_REQUEST);
         }
-        if (moviesDTO.getShowtimesId() != null && moviesDTO.getBookingsId() != 0) {
-            movies.getShowtimes().add(moviesDTO.getShowtimesId());
-        }
-        moviesRepository.save(movies);
 
-        return "pelicula creada";
     }
+
 
     @Override
     public Movies getMovie(Long id) {
